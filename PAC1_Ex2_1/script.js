@@ -14,8 +14,9 @@ function showError(input, message){
 
     if (input.id === 'password') {
         small.style.display = 'block';      
-        small.style.marginTop = '5px';     
+        small.style.marginTop = '10px';     
         small.style.position = 'relative';  
+    }
 }
 
 // Show input success outline
@@ -56,7 +57,7 @@ function checkRequired(inputArr){
 function checkCharacterPassword(input) {
     const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+=\-{}|\[\]\\Formating:";'<>,.?/~`])/;
 
-    
+    // Fem el test sobre el contingut real de la contrasenya
     if (re.test(input.value.trim())) {
         showSuccess(input);
     } else {
@@ -101,19 +102,18 @@ form.addEventListener('submit', function(e) {
     // Comprovem tots els camps obligatoris
     checkRequired([username, age, email, password, password2]);
     
-    //Validem el correu només si s'hi ha escrit alguna cosa
+    // Validem el correu només si s'hi ha escrit alguna cosa
     if (email.value.trim() !== '') {
         checkEmail(email); 
     }
 
     // Validem la contrasenya només si s'hi ha escrit alguna cosa
-    // si està buida, es manté el missatge de "Password is required"
     if (password.value.trim() !== '') {
         checkCharacterPassword(password);
         checkLength(password, 8, 20);
     }
 
-    // Validem si les contrasenyes coincideixen (només si s'ha escrit a la segona)
+    // Validem si les contrasenyes coincideixen 
     if (password2.value.trim() !== '') {
         checkPasswordsMatch(password, password2);
     }
