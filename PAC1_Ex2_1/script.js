@@ -1,14 +1,9 @@
 const form = document.getElementById('form');
 const username = document.getElementById('username'); 
+const age = document.getElementById('age'); 
 const email = document.getElementById('email');
 const password = document.getElementById('password');
 const password2 = document.getElementById('password2');
-
-// Show success outline
-function showSuccess(input) {
-    const formControl = input.parentElement;
-    formControl.className = 'form-control success'; 
-}
 
 // Show input error 
 function showError(input, message){
@@ -16,52 +11,119 @@ function showError(input, message){
     formControl.className = 'form-control error'; 
     const small = formControl.querySelector('small'); 
     small.innerText = message; 
+
+    if (input.id === 'password') {
+        small.style.display = 'block';      
+        small.style.marginTop = '5px';     
+        small.style.position = 'relative';  
 }
 
-//Show input success outline
+// Show input success outline
 function showSuccess(input){
-     const formControl = input.parentElement; 
+    const formControl = input.parentElement; 
     formControl.className = 'form-control success';
+
+    const small = formControl.querySelector('small');
+    if (small) {
+        small.style.marginTop = '0px';
+    }
 }
 
-//Check email is valid
-function isValidEmail(email){
-    //Fem servir regex que es un validaador de email general. 
-    const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    return re.test(String(email).toLowerCase());
+// Check email is valid
+function checkEmail(input){
+    
+    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    
+    if(re.test(input.value.trim())){
+        showSuccess(input);
+    } else {
+        showError(input, 'Email is not valid');
+    }
 }
+
+// Check required fields
+function checkRequired(inputArr){
+    inputArr.forEach(function(input) {
+        if (input.value.trim() === '') {
+            showError(input, `${getFieldName(input)} is required`);
+        } else {
+            showSuccess(input);
+        }
+    });
+}
+
+//Check characters passwords
+function checkCharacterPassword(input) {
+    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+=\-{}|\[\]\\Formating:";'<>,.?/~`])/;
+
+    
+    if (re.test(input.value.trim())) {
+        showSuccess(input);
+    } else {
+        showError(input, 'Password must contain lower case, upper case and special characters.');
+    }
+}
+
+// Check passwords match 
+function checkPasswordsMatch(input1, input2){
+    if(input1.value !== input2.value){
+        showError(input2, 'Passwords do not match')
+    } 
+}
+
+//Check length 
+function checkLength(input, min, max){
+    if(input.value.length < min){
+        showError(input, `${getFieldName(input)} must be at least ${min} characters`)
+    } else if (input.value.length > max){
+        showError(input, `${getFieldName(input)} must be less than ${max} characters`)
+        }
+}
+
+//Check Age
+function checkAge(input, min, max) {
+    const value = parseInt(input.value, 10);
+    if (value < min || value > max || isNaN(value)) {
+        showError(input, `${getFieldName(input)} must be between ${min} and ${max} years old.`);
+    }
+}
+
+// Get fieldname
+function getFieldName(input){
+    return input.id.charAt(0).toUpperCase() + input.id.slice(1);
+}
+
 
 // Event listener
-form.addEventListener('submit', function(e){
-    e.preventDefault(); //Serveix perque no fagi flash quan s'apreta submit.
+form.addEventListener('submit', function(e) {
+    e.preventDefault(); 
 
-    if(username.value === ''){
-        showError(username, 'Username is required');
-    } else {
-        showSuccess(username);
+    // Comprovem tots els camps obligatoris
+    checkRequired([username, age, email, password, password2]);
+    
+    //Validem el correu només si s'hi ha escrit alguna cosa
+    if (email.value.trim() !== '') {
+        checkEmail(email); 
     }
 
-    if(email.value === ''){
-        showError(email, 'Email is required');
-    } else if(!isValidEmail(email.value)) {
-        showError(email, 'Email is not valid')
-
-    }
-    else {
-        showSuccess(email);
+    // Validem la contrasenya només si s'hi ha escrit alguna cosa
+    // si està buida, es manté el missatge de "Password is required"
+    if (password.value.trim() !== '') {
+        checkCharacterPassword(password);
+        checkLength(password, 8, 20);
     }
 
-    if(password.value === ''){
-        showError(password, 'Password is required');
-    } else {
-        showSuccess(password);
+    // Validem si les contrasenyes coincideixen (només si s'ha escrit a la segona)
+    if (password2.value.trim() !== '') {
+        checkPasswordsMatch(password, password2);
     }
 
-    if(password2.value === ''){
-        showError(password2, 'Password 2 is required');
-    } else {
-        showSuccess(password2);
+    // Validem les mides i l'edat de la resta de camps si tenen text
+    if (username.value.trim() !== '') {
+        checkLength(username, 4, 15);
     }
     
+    if (age.value.trim() !== '') {
+        checkAge(age, 0, 1000); 
+    }
 });
-
