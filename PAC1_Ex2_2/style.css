@@ -1,0 +1,90 @@
+:root {
+    --primary-color:#bf419f;
+}
+
+*{
+    box-sizing: border-box;
+    
+}
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: bisque;
+    height: 100vh;
+    margin: 0;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+}
+.container{
+    
+    padding: 20px;
+}
+
+p{
+    text-align: center;
+}
+
+.btn {
+    color: white;
+    background-color:var(--primary-color);
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 10px 20px;
+}
+
+.money-img{
+    width: 500px;
+}
+
+.currency{
+    padding: 40px 0;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+}
+
+.currency select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 10px 30px 10px 10px;
+    border: 2px solid #000000;
+    font-size: 16px;
+    background-color: transparent;
+    background-image: url('src/angle-down-svgrepo-com.svg'); 
+    background-repeat: no-repeat;
+    background-position: right 12px center; 
+    background-size: 12px; 
+}
+
+.currency input{
+    border: 0;
+    background: transparent;
+    font-size: 30px;
+    text-align: right;
+}
+
+.swap-rate-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.rate{
+    background-color: var(--primary-color);
+    font-size: 14px;
+    padding: 0 10px;
+}
+
+select:focus, input:focus, button:focus{
+    outline: 0;
+}
+
+@media(max-width: 600px{
+    .currency input{
+        width: 200px;
+    }
+})

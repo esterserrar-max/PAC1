@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Exchange Rate Calculator</title>
+</head>
+
+<body>
+    <img src="src/money.jpg" alt="" class="money-img"
+    width="500px">
+    <h1>Exchange Rate Calculator</h1>
+    <p>Choose the currency and the amounts to get the exchange rate</p> 
+    <div class="container">
+        <div class="currency">
+        <select name="" id="currency-one">
+            <option value="USD" selected>USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="JPY">JPY</option>
+            <option value="CAD">CAD</option>
+            <option value="AUD">AUD</option>
+            <option value="CHF">CHF</option>
+            <option value="CNY">CNY</option>
+            <option value="ARS">ARS</option>
+            <option value="MXN">MXN</option>
+            <option value="BRL">BRL</option>
+            <option value="DKK">DKK</option>
+            <option value="NOK">NOK</option>
+            <option value="SEK">SEK</option>
+            <option value="PLN">PLN</option>
+            <option value="CZK">CZK</option>
+            <option value="HUF">HUF</option>
+            <option value="TRY">TRY</option>
+            <option value="ISK">ISK</option>
+            <option value="CLP">CLP</option>
+            <option value="COP">COP</option>
+            <option value="PEN">PEN</option>
+            <option value="UYU">UYU</option>
+            <option value="DOP">DOP</option>
+            <option value="NZD">NZD</option>
+            <option value="HKD">HKD</option>
+            <option value="SGD">SGD</option>
+            <option value="INR">INR</option>
+            <option value="KRW">KRW</option>
+            <option value="THB">THB</option>
+            <option value="IDR">IDR</option>
+            <option value="ILS">ILS</option>
+            <option value="AED">AED</option>
+            <option value="ZAR">ZAR</option>
+            <option value="EGP">EGP</option>
+            <option value="MAD">MAD</option>
+        </select>
+        <input type="number" id="amount-1" placeholder="0" value="1" min="0" step="0.01">
+    </div>
+    <div class="swap-rate-container">
+        <button class="btn" id="rate">
+            Swap
+        </button>
+        <div class="rate" id="rate"></div>
+    </div>
+
+
+    <div class="currency">
+        <select name="" id="currency-two">
+            <option value="USD">USD</option>
+            <option value="EUR" selected>EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="JPY">JPY</option>
+            <option value="CAD">CAD</option>
+            <option value="AUD">AUD</option>
+            <option value="CHF">CHF</option>
+            <option value="CNY">CNY</option>
+            <option value="ARS">ARS</option>
+            <option value="MXN">MXN</option>
+            <option value="BRL">BRL</option>
+            <option value="DKK">DKK</option>
+            <option value="NOK">NOK</option>
+            <option value="SEK">SEK</option>
+            <option value="PLN">PLN</option>
+            <option value="CZK">CZK</option>
+            <option value="HUF">HUF</option>
+            <option value="TRY">TRY</option>
+            <option value="ISK">ISK</option>
+            <option value="CLP">CLP</option>
+            <option value="COP">COP</option>
+            <option value="PEN">PEN</option>
+            <option value="UYU">UYU</option>
+            <option value="DOP">DOP</option>
+            <option value="NZD">NZD</option>
+            <option value="HKD">HKD</option>
+            <option value="SGD">SGD</option>
+            <option value="INR">INR</option>
+            <option value="KRW">KRW</option>
+            <option value="THB">THB</option>
+            <option value="IDR">IDR</option>
+            <option value="ILS">ILS</option>
+            <option value="AED">AED</option>
+            <option value="ZAR">ZAR</option>
+            <option value="EGP">EGP</option>
+            <option value="MAD">MAD</option>
+        </select>
+        <input type="number" id="amount-2" placeholder="0">
+    </div>
+
+    </div>
+
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
