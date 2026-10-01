@@ -67,16 +67,16 @@ p{
     text-align: right;
 }
 
-.swap-rate-container{
+.swap{
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
 .rate{
-    background-color: var(--primary-color);
+    border: 2px solid var(--primary-color);
     font-size: 14px;
-    padding: 0 10px;
+    padding: 5px 10px;
 }
 
 select:focus, input:focus, button:focus{
