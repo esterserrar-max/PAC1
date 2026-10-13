@@ -7,6 +7,49 @@
     <title>Movie seat booking and exchange rate fee</title>
 </head>
 <body>
+
+    <div class="currency">
+        <label id="chooseCurrency">Choose currency:</label>
+        <select id="currency-rate">
+            <option value="USD" selected>USD</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+                <option value="JPY">JPY</option>
+                <option value="CAD">CAD</option>
+                <option value="AUD">AUD</option>
+                <option value="CHF">CHF</option>
+                <option value="CNY">CNY</option>
+                <option value="ARS">ARS</option>
+                <option value="MXN">MXN</option>
+                <option value="BRL">BRL</option>
+                <option value="DKK">DKK</option>
+                <option value="NOK">NOK</option>
+                <option value="SEK">SEK</option>
+                <option value="PLN">PLN</option>
+                <option value="CZK">CZK</option>
+                <option value="HUF">HUF</option>
+                <option value="TRY">TRY</option>
+                <option value="ISK">ISK</option>
+                <option value="CLP">CLP</option>
+                <option value="COP">COP</option>
+                <option value="PEN">PEN</option>
+                <option value="UYU">UYU</option>
+                <option value="DOP">DOP</option>
+                <option value="NZD">NZD</option>
+                <option value="HKD">HKD</option>
+                <option value="SGD">SGD</option>
+                <option value="INR">INR</option>
+                <option value="KRW">KRW</option>
+                <option value="THB">THB</option>
+                <option value="IDR">IDR</option>
+                <option value="ILS">ILS</option>
+                <option value="AED">AED</option>
+                <option value="ZAR">ZAR</option>
+                <option value="EGP">EGP</option>
+                <option value="MAD">MAD</option>
+        </select>
+    </div>
+
     <div class="movie-container">
         <label>Pick a movie:</label>
         <select id="movie">
@@ -99,7 +142,7 @@
             </div>
     </div>
 
-    <p class="text"> You have selected <span id="count">0</span> seats for a price of <span id="total">0</span>
+    <p class="text"> You have selected <span id="count">0</span> seats for a price of <span id="total">0</span > <span id="currency-symbol">USD</span>
     </p>
 
     <script src="script.js"></script>

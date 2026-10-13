@@ -4,31 +4,65 @@ const count = document.getElementById('count');
 const total = document.getElementById('total');
 const movieSelect = document.getElementById('movie');
 
-populateUI();
 
-let ticketPrice = +movieSelect.value;
+const baseCurrency = 'USD'; 
+const currencyRateSelect = document.getElementById('currency-rate');
+const currencySymbolEl = document.getElementById('currency-symbol');
 
-//Save selected movie index and price 
+let currentRate = 1; 
+let ticketPrice = +movieSelect.value; 
+
 function setMovieData(movieIndex, moviePrice){
     localStorage.setItem('selectedMovieIndex', movieIndex);
     localStorage.setItem('selectedMoviePrice', moviePrice);
 }
 
-//Update total and count
 function updateSelectedCount(){
     const selectedSeats = document.querySelectorAll('.row .seat.selected');
 
+    // Guardem la posició dels seients blaus
     const seatsIndex = [...selectedSeats].map(function(seat){
-    return[...seats].indexOf(seat);
-})
+        return [...seats].indexOf(seat);
+    });
     localStorage.setItem('selectedSeats', JSON.stringify(seatsIndex));
 
     const selectedSeatsCount = selectedSeats.length;
     count.innerText = selectedSeatsCount;
-    total.innerText = selectedSeatsCount * ticketPrice; 
+    total.innerText = (selectedSeatsCount * ticketPrice).toFixed(2); 
 }
 
-//Get Data from LocalStorage and Populate UI
+
+function updateCurrency() {
+    const targetCurrency = currencyRateSelect.value; 
+
+    fetch(`https://open.er-api.com/v6/latest/${baseCurrency}`)
+        .then(res => res.json())
+        .then(data => {
+    
+            currentRate = data.rates[targetCurrency];
+
+            currencySymbolEl.innerText = targetCurrency;
+
+            localStorage.setItem('selectedMovieCurrency', targetCurrency);
+
+            ticketPrice = +movieSelect.value * currentRate;
+
+            const movieOptions = movieSelect.querySelectorAll('option');
+            
+            movieOptions.forEach(option => {
+                const preuBaseUSD = +option.value; 
+                const preuConvertit = (preuBaseUSD * currentRate).toFixed(2); 
+                
+                let nomPelicula = option.text.split('(')[0].trim();
+                
+                option.text = `${nomPelicula} (${preuConvertit} ${targetCurrency})`;
+            });
+
+            updateSelectedCount();  
+        })
+        .catch(err => console.error('Error canviant divisa:', err));
+}
+
 function populateUI(){
     const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats'));
 
@@ -41,29 +75,34 @@ function populateUI(){
     }
 
     const selectedMovieIndex = localStorage.getItem('selectedMovieIndex');
-
     if(selectedMovieIndex !== null) {
         movieSelect.selectedIndex = selectedMovieIndex;
     }
 }
 
-//Movie Select event
+
 movieSelect.addEventListener('change', (e) => {
-    ticketPrice = e.target.value;
+    const taxaActual = currentRate || 1;
+    ticketPrice = +e.target.value * taxaActual;
     setMovieData(e.target.selectedIndex, e.target.value);
     updateSelectedCount();
-})
+});
 
-// Click Event 
 container.addEventListener('click', (e) => {
-    if(e.target.classList.contains('seat') && !e.target.classList.contains('occupied')
-    ) {
+    if(e.target.classList.contains('seat') && !e.target.classList.contains('occupied')) {
         e.target.classList.toggle('selected');
-
         updateSelectedCount();
     }
-}
-);
+});
 
-//Inicial count and total set 
-updateSelectedCount();
+currencyRateSelect.addEventListener('change', updateCurrency);
+
+populateUI();
+
+const monedaGuardada = localStorage.getItem('selectedMovieCurrency');
+if (monedaGuardada !== null) {
+    currencyRateSelect.value = monedaGuardada;
+    updateCurrency(); 
+} else {
+    updateCurrency();
+}
